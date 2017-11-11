@@ -1,14 +1,21 @@
+const path = require('path');
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
-const helpers = require('./helpers');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const cwd = process.cwd();
 
 module.exports = webpackMerge(commonConfig, {
-    devtool: 'source-map',
+  devtool: 'source-map',
 
-    output: {
-        path: helpers.root('wwwroot'),
-        filename: 'js/[name].js',
-        devtoolModuleFilenameTemplate: '../[resource-path]'
-    }
+  output: {
+    path: path.resolve(cwd, 'wwwroot'),
+    filename: 'js/[name].js',
+    devtoolModuleFilenameTemplate: '../[resource-path]'
+  },
+
+  plugins: [
+    new ExtractTextPlugin('[name].[contenthash].css')
+  ]
 });

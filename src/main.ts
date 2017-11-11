@@ -5,6 +5,6 @@ import './assets/styles/app.scss';
 import { AppModule } from './app/app.module';
 
 if (process.env.ENV === 'Production') {
-    enableProdMode();
+  enableProdMode();
 }
 platformBrowserDynamic().bootstrapModule(AppModule);

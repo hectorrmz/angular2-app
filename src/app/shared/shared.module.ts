@@ -1,17 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
 
-import { HelloWorldComponent } from './hello-world/hello-world.component';
+import { LayoutComponent } from './layout/layout.component';
+
+import { LoginComponent } from '../login/login.component';
+import { TimesEntryComponent } from '../times-entry/times-entry.component';
+
+const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  {path: 'calendar', component:TimesEntryComponent}
+];
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule.forRoot(routes)
   ],
   declarations: [
-    HelloWorldComponent
+    LayoutComponent,
+    LoginComponent
   ],
   exports: [
-    HelloWorldComponent
+    LayoutComponent
   ]
 })
 export class SharedModule { }

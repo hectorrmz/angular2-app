@@ -3,13 +3,15 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { SharedModule } from './shared/shared.module';
+import {TimesEntryModule} from './times-entry/times-entry.module';
 
 import { AppComponent } from './app.component';
 
 @NgModule({
   imports: [
     BrowserModule,
-    SharedModule
+    SharedModule,
+    TimesEntryModule
   ],
   declarations: [
     AppComponent
