@@ -1,4 +1,4 @@
 
 <times-project [projects]="projects" [issues]="issues" (change)="setIssue($event)"></times-project>
 
-<app-calendar></app-calendar>
+<app-calendar [entries]="entries"  *ngIf="issueId"></app-calendar>

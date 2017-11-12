@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, Input } from '@angular/core';
 import { CalendarHelper } from '../../../services/calendar-helper.service';
 import { Week, Day, Time } from '../../../models/Calendar';
 
@@ -10,8 +10,9 @@ import { Week, Day, Time } from '../../../models/Calendar';
 })
 export class CalendarComponent {
 
+    @Input() entries: Array<Time>;
+
     weeks: Array<Week> = [];
-    entries: Array<Time> = [];
     onAddTime: Function;
     selected: Time;
 

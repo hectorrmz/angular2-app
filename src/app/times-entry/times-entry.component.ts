@@ -6,6 +6,8 @@ import { AuthHelper } from '../services/auth-helper.service';
 
 //models
 import { Project, Issue } from '../models/Redmine';
+import { CalendarHelper } from '../services/calendar-helper.service';
+import { Time } from '../models/Calendar';
 
 @Component({
     selector: 'times-entry',
@@ -14,14 +16,20 @@ import { Project, Issue } from '../models/Redmine';
 export class TimesEntryComponent {
 
     projects: Array<Project>;
-
     issues: Array<Issue>;
-    issue: Issue;
+    entries: Array<Time>;
 
-    constructor(private redmineService: RedMineService, private authHelper: AuthHelper) {
+    issueId: number;
 
-        if (this.authHelper.getIssueId() > 0) {
+    constructor(
+        private redmineService: RedMineService,
+        private authHelper: AuthHelper,
+        private calendarHelper: CalendarHelper
+    ) {
+        this.issueId = this.authHelper.getIssueId();
 
+        if (this.issueId) {
+            this.getTimes(this.issueId);
         } else {
             this.getProjects();
             this.getIssues();
@@ -39,14 +47,28 @@ export class TimesEntryComponent {
             .subscribe((response: any) => this.issues = response.issues);
     }
 
-    getTimes(issueId: number, dateRange: string) {
+    getTimes(issueId: number) {
+
+        let today = new Date();
+
+        let currentMont = today.getMonth();
+        let currentYear = today.getFullYear();
+
+        let lastDayInMonth = this.calendarHelper.daysInMonth(currentMont, currentYear);
+
+        let dateRange = `><${currentYear}-${currentMont + 1}-01|${currentYear}-${currentMont + 1}-${lastDayInMonth}`;
+
         this.redmineService.getTimeEntries(issueId, dateRange).finally(() => console.log('Issues Called!'))
-            .subscribe((response: any) => this.issues = response.issues);
+            .subscribe((response: any) => this.entries = response.time_entries);
     }
 
     setIssue(issue: Issue) {
-        this.issue = issue;
-        this.authHelper.setIssueId(issue.id);
+
+        this.issueId = issue.id;
+
+        this.authHelper.setIssueId(this.issueId);
+        this.getTimes(this.issueId);
+
     }
 
 }

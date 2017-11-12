@@ -149,7 +149,6 @@
 			host: "dev.unosquare.com",
 			pathname: "/redmine/time_entries.json",
 			query: {
-				key: query.key,
 				issue_id: query.issue_id,
 				user_id: query.id,
 				spent_on: query.spend_on,
@@ -157,7 +156,9 @@
 			}
 		};
 
-		var jsonUrl = url.format(options)
+		var jsonUrl = url.format(options);
+
+		console.log(jsonUrl);
 
 		var requestOptions = {
 			url: jsonUrl,

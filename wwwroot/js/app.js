@@ -3,7 +3,7 @@ webpackJsonp([1],{
 /***/ 1000:
 /***/ (function(module, exports) {
 
-module.exports = "\n<times-project [projects]=\"projects\" [issues]=\"issues\" (change)=\"setIssue($event)\"></times-project>\n\n<app-calendar></app-calendar>";
+module.exports = "\n<times-project [projects]=\"projects\" [issues]=\"issues\" (change)=\"setIssue($event)\"></times-project>\n\n<app-calendar [entries]=\"entries\"  *ngIf=\"issueId\"></app-calendar>";
 
 /***/ }),
 
@@ -193,7 +193,6 @@ var CalendarComponent = /** @class */ (function () {
     function CalendarComponent(calendarHelper) {
         this.calendarHelper = calendarHelper;
         this.weeks = [];
-        this.entries = [];
         this.setdaysRange();
         this.currentView = 0;
     }
@@ -235,6 +234,10 @@ var CalendarComponent = /** @class */ (function () {
         }
         return total;
     };
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Array)
+    ], CalendarComponent.prototype, "entries", void 0);
     CalendarComponent = __decorate([
         core_1.Component({
             selector: 'app-calendar',
@@ -21132,10 +21135,10 @@ var AuthHelper = /** @class */ (function () {
             _this.session.setItem('user_id', userId.toString());
             _this.userId = userId;
         };
-        this.getIssueId = function () { return _this.userId; };
+        this.getIssueId = function () { return _this.issueId; };
         this.setIssueId = function (issueId) {
             _this.session.setItem('issue_id', issueId.toString());
-            _this.userId = issueId;
+            _this.issueId = issueId;
         };
         this.isAuthorized = function () {
             if (!_this.apiKey || !_this.userId) {
@@ -23491,11 +23494,15 @@ var core_1 = __webpack_require__(1);
 //services
 var redmine_service_1 = __webpack_require__(439);
 var auth_helper_service_1 = __webpack_require__(200);
+var calendar_helper_service_1 = __webpack_require__(1014);
 var TimesEntryComponent = /** @class */ (function () {
-    function TimesEntryComponent(redmineService, authHelper) {
+    function TimesEntryComponent(redmineService, authHelper, calendarHelper) {
         this.redmineService = redmineService;
         this.authHelper = authHelper;
-        if (this.authHelper.getIssueId() > 0) {
+        this.calendarHelper = calendarHelper;
+        this.issueId = this.authHelper.getIssueId();
+        if (this.issueId) {
+            this.getTimes(this.issueId);
         }
         else {
             this.getProjects();
@@ -23512,21 +23519,29 @@ var TimesEntryComponent = /** @class */ (function () {
         this.redmineService.getIssues().finally(function () { return console.log('Issues Called!'); })
             .subscribe(function (response) { return _this.issues = response.issues; });
     };
-    TimesEntryComponent.prototype.getTimes = function (issueId, dateRange) {
+    TimesEntryComponent.prototype.getTimes = function (issueId) {
         var _this = this;
+        var today = new Date();
+        var currentMont = today.getMonth();
+        var currentYear = today.getFullYear();
+        var lastDayInMonth = this.calendarHelper.daysInMonth(currentMont, currentYear);
+        var dateRange = "><" + currentYear + "-" + (currentMont + 1) + "-01|" + currentYear + "-" + (currentMont + 1) + "-" + lastDayInMonth;
         this.redmineService.getTimeEntries(issueId, dateRange).finally(function () { return console.log('Issues Called!'); })
-            .subscribe(function (response) { return _this.issues = response.issues; });
+            .subscribe(function (response) { return _this.entries = response.time_entries; });
     };
     TimesEntryComponent.prototype.setIssue = function (issue) {
-        this.issue = issue;
-        this.authHelper.setIssueId(issue.id);
+        this.issueId = issue.id;
+        this.authHelper.setIssueId(this.issueId);
+        this.getTimes(this.issueId);
     };
     TimesEntryComponent = __decorate([
         core_1.Component({
             selector: 'times-entry',
             template: __webpack_require__(1000)
         }),
-        __metadata("design:paramtypes", [redmine_service_1.RedMineService, auth_helper_service_1.AuthHelper])
+        __metadata("design:paramtypes", [redmine_service_1.RedMineService,
+            auth_helper_service_1.AuthHelper,
+            calendar_helper_service_1.CalendarHelper])
     ], TimesEntryComponent);
     return TimesEntryComponent;
 }());

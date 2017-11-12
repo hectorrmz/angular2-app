@@ -33,11 +33,11 @@ export class AuthHelper {
         this.userId = userId;
     }
 
-    getIssueId = (): number => this.userId;
+    getIssueId = (): number => this.issueId;
 
     setIssueId = (issueId: number): void => {
         this.session.setItem('issue_id', issueId.toString());
-        this.userId = issueId;
+        this.issueId = issueId;
     }
 
     isAuthorized = (): boolean => {
