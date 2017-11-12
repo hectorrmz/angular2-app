@@ -1,6 +1,4 @@
-<times-project></times-project>
-<times-issues></times-issues>
 
-<h2>{{ month }}</h2>
+<times-project [projects]="projects" [issues]="issues" (change)="setIssue($event)"></times-project>
 
 <week-view></week-view>

@@ -3,7 +3,35 @@
     padding: 15px;
     margin: 0 auto;
 
+    &.isLogged{
+        -webkit-animation: fade-out .7s ease-out forwards;
+        animation: fade-out .7s ease-out forwards;
+    }
+
     .form-control{
         margin-bottom: 15px;
+    }
+}
+
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes slide-up-fade-in {
+    0% {
+        opacity: 1;
+        transform: translate(0px,0px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(0px,600px);
     }
 }

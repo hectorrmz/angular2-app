@@ -3,14 +3,12 @@ import { Http, Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 
-//models
-import { User } from '../models/User';
-
 @Injectable()
 export class AuthService {
-    constructor(private http: Http) { }
 
-    loginRM(user: User): Observable<any> {
+    constructor(private http: Http) {}
+
+    loginRM(user: any): Observable<any> {
         return this.http
             .post('user', user)
             .map((response: Response) => response.json())

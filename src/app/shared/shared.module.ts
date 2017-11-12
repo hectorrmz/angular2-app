@@ -10,10 +10,11 @@ import { LayoutComponent } from './layout/layout.component';
 
 import { LoginComponent } from '../login/login.component';
 import { TimesEntryComponent } from '../times-entry/times-entry.component';
+import { AuthGuardService } from '../services/auth-guard.service';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  {path: 'calendar', component:TimesEntryComponent}
+  { path: 'login', component: LoginComponent },
+  {path: '', component:TimesEntryComponent, canActivate: [AuthGuardService]}
 ];
 
 @NgModule({

@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { TimesEntryComponent } from './times-entry.component';
 import { WeekViewComponent } from './components/week-view/week-view.component';
-import { ProjectComponent } from './components/project/project.component';
-import { IssuesComponent } from './components/issues/issues.component';
+import { ProjectComponent, FilterIssueByProject } from './components/project/project.component';
 
 @NgModule({
     imports: [
@@ -14,7 +13,7 @@ import { IssuesComponent } from './components/issues/issues.component';
         TimesEntryComponent,
         WeekViewComponent,
         ProjectComponent,
-        IssuesComponent
+        FilterIssueByProject
     ]
 })
 export class TimesEntryModule { }

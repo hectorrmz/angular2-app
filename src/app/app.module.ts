@@ -11,6 +11,9 @@ import { AppComponent } from './app.component';
 
 //Services
 import { AuthService } from './services/auth.service';
+import { AuthHelper } from './services/auth-helper.service';
+import { AuthGuardService } from './services/auth-guard.service';
+import { RedMineService } from './services/redmine.service';
 
 @NgModule({
   imports: [
@@ -23,7 +26,10 @@ import { AuthService } from './services/auth.service';
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    AuthService
+    AuthService,
+    AuthHelper,
+    AuthGuardService,
+    RedMineService
   ],
   bootstrap: [AppComponent]
 })

@@ -12,7 +12,6 @@
 
 	// parse application/x-www-form-urlencoded
 	app.use(bodyParser.urlencoded({ extended: false }))
-
 	// parse application/json
 	app.use(bodyParser.json());
 
@@ -45,12 +44,45 @@
 
 	});
 
+	authorizeService = function (req, res, next) {
+		next();
+	}
+
+	app.get("/projects", function (req, res) {
+
+		var url_parts = url.parse(req.url, true);
+		var query = url_parts.query;
+
+		if (!req.header("x-redmine-api-key")) {
+			res.status("401").send({ message: "Not Authorized" });
+		}
+
+		var options = {
+			protocol: "https",
+			host: "dev.unosquare.com",
+			pathname: "/redmine/projects.json"
+		};
+
+		var jsonUrl = url.format(options);
+
+		var options = {
+			url: jsonUrl,
+			headers: {
+				'X-Redmine-API-Key': req.header("x-redmine-api-key")
+			}
+		}
+
+		request(options).pipe(res);
+
+	});
+
+
 	app.get("/issues", function (req, res) {
 
 		var url_parts = url.parse(req.url, true);
 		var query = url_parts.query;
 
-		if (!query.key && !query.id) {
+		if (!query.id) {
 			res.status("401").send({ message: "Not Authorized" });
 		}
 
@@ -58,34 +90,44 @@
 			protocol: "https",
 			host: "dev.unosquare.com",
 			pathname: "/redmine/issues.json",
-			query: { key: query.key, assigned_to_id: query.id }
+			query: { assigned_to_id: query.id }
 		};
 
 		var jsonUrl = url.format(options);
-		request(jsonUrl).pipe(res);
+
+		var options = {
+			url: jsonUrl,
+			headers: {
+				'X-Redmine-API-Key': req.header("x-redmine-api-key")
+			}
+		}
+
+		request(options).pipe(res);
 
 	});
 
 	app.get("/activities", function (req, res) {
-		
-				var url_parts = url.parse(req.url, true);
-				var query = url_parts.query;
-		
-				if (!query.key) {
-					res.status("401").send({ message: "Not Authorized" });
-				}
-		
-				var options = {
-					protocol: "https",
-					host: "dev.unosquare.com",
-					pathname: "/redmine/enumerations/time_entry_activities.json",
-					query: { key: query.key }
-				};
-		
-				var jsonUrl = url.format(options);
-				request(jsonUrl).pipe(res);
-		
-			});
+
+		var url_parts = url.parse(req.url, true);
+		var query = url_parts.query;
+
+		if (!query.key) {
+			res.status("401").send({ message: "Not Authorized" });
+		}
+
+		var url = {
+			protocol: "https",
+			host: "dev.unosquare.com",
+			pathname: "/redmine/enumerations/time_entry_activities.json",
+			query: { key: query.key }
+		};
+
+		var jsonUrl = url.format(options);
+
+
+		request(jsonUrl).pipe(res);
+
+	});
 
 	app.get("/times", function (req, res) {
 
