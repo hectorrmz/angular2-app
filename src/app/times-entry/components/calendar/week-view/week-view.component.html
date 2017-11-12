@@ -1,0 +1,21 @@
+<ng-container *ngFor="let week of weeks; let i= index">
+    <div class="week"  *ngIf="view === i">
+        <div class="weekday" *ngFor="let day of week.weekDays;"  [ngClass]="{'no-active': !day.date}" >
+            <header>{{day.name}} {{day.date}}</header>
+            <div class="day">
+                <div *ngFor="let time of  day.times.entries">
+                    <span>{{time.title}}</span>
+                    <div>
+                        <span class="hours">Hours:
+                            <span class="hour-value">{{time.duration}}</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="day-footer" ng-if="day.date">
+                <div class="add-btn">+</div>
+                <span>Total:</span>
+            </div>
+        </div>
+    </div>
+</ng-container>

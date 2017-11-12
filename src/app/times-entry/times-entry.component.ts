@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 
 //services
 import { RedMineService } from '../services/redmine.service';
+import { AuthHelper } from '../services/auth-helper.service';
 
 //models
-import { Project } from '../models/Project';
-import { Issue } from '../models/Issue';
+import { Project, Issue } from '../models/Redmine';
 
 @Component({
     selector: 'times-entry',
@@ -18,9 +18,15 @@ export class TimesEntryComponent {
     issues: Array<Issue>;
     issue: Issue;
 
-    constructor(private redmineService: RedMineService) {
-        this.getProjects();
-        this.getIssues();
+    constructor(private redmineService: RedMineService, private authHelper: AuthHelper) {
+
+        if (this.authHelper.getIssueId() > 0) {
+
+        } else {
+            this.getProjects();
+            this.getIssues();
+        }
+
     }
 
     getProjects() {
@@ -28,14 +34,19 @@ export class TimesEntryComponent {
             .subscribe((response: any) => this.projects = response.projects);
     }
 
-    getIssues(){
+    getIssues() {
         this.redmineService.getIssues().finally(() => console.log('Issues Called!'))
-        .subscribe((response: any) => this.issues = response.issues);
+            .subscribe((response: any) => this.issues = response.issues);
+    }
+
+    getTimes(issueId: number, dateRange: string) {
+        this.redmineService.getTimeEntries(issueId, dateRange).finally(() => console.log('Issues Called!'))
+            .subscribe((response: any) => this.issues = response.issues);
     }
 
     setIssue(issue: Issue) {
         this.issue = issue;
-        console.log(issue);
+        this.authHelper.setIssueId(issue.id);
     }
 
 }

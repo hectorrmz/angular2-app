@@ -1,8 +1,7 @@
 import { Component, Input, Output, EventEmitter, Pipe, PipeTransform } from '@angular/core';
 
 //models
-import { Project } from '../../../models/Project';
-import { Issue } from '../../../models/Issue';
+import { Project, Issue } from '../../../models/Redmine';
 
 @Component({
     selector: 'times-project',

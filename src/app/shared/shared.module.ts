@@ -13,8 +13,8 @@ import { TimesEntryComponent } from '../times-entry/times-entry.component';
 import { AuthGuardService } from '../services/auth-guard.service';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  {path: '', component:TimesEntryComponent, canActivate: [AuthGuardService]}
+  { path: 'login', component: LoginComponent, pathMatch: 'full' },
+  {path: '', component:TimesEntryComponent, canActivate: [AuthGuardService], pathMatch: 'full'}
 ];
 
 @NgModule({

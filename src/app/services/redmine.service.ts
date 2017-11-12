@@ -9,6 +9,7 @@ export class RedMineService {
 
     headers: Headers = new Headers();
     options: RequestOptions = new RequestOptions();
+    userId: number;
 
     constructor(private http: Http, private authHelper: AuthHelper) {
 
@@ -19,14 +20,14 @@ export class RedMineService {
             this.options.headers = this.headers;
         }
 
+        this.userId = this.authHelper.getRMUserId() ? this.authHelper.getRMUserId() : 0;
+
     }
 
     getIssues(): Observable<any> {
 
-        let userId = this.authHelper.getRMUserId() ? this.authHelper.getRMUserId() : 0;
-
         return this.http
-            .get(`issues?id=${userId}`, this.options)
+            .get(`issues?id=${this.userId}`, this.options)
             .map((response: Response) => response.json())
             .catch((error: any) => Observable.throw(error.json()));
     }
@@ -35,6 +36,12 @@ export class RedMineService {
 
         return this.http
             .get('projects', this.options)
+            .map((response: Response) => response.json())
+            .catch((error: any) => Observable.throw(error.json()));
+    }
+
+    getTimeEntries(issueId: number, date: string) {
+        return this.http.get(`times?id=${this.userId}&issue_id=${issueId}&spend_on=${date}`, this.options)
             .map((response: Response) => response.json())
             .catch((error: any) => Observable.throw(error.json()));
     }

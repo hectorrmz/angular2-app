@@ -7,7 +7,7 @@ import { AuthService } from '../services/auth.service';
 import { AuthHelper } from '../services/auth-helper.service';
 
 //models
-import { UserRM } from '../models/UserRM';
+import { UserRM } from '../models/Redmine';
 
 @Component({
     selector: 'app-login',

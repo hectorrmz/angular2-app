@@ -95,14 +95,14 @@
 
 		var jsonUrl = url.format(options);
 
-		var options = {
+		var requestOptions = {
 			url: jsonUrl,
 			headers: {
 				'X-Redmine-API-Key': req.header("x-redmine-api-key")
 			}
 		}
 
-		request(options).pipe(res);
+		request(requestOptions).pipe(res);
 
 	});
 
@@ -124,8 +124,14 @@
 
 		var jsonUrl = url.format(options);
 
+		var requestOptions = {
+			url: jsonUrl,
+			headers: {
+				'X-Redmine-API-Key': req.header("x-redmine-api-key")
+			}
+		}
 
-		request(jsonUrl).pipe(res);
+		request(requestOptions).pipe(res);
 
 	});
 
@@ -134,12 +140,9 @@
 		var url_parts = url.parse(req.url, true);
 		var query = url_parts.query;
 
-		if (!query.key && !query.id && !query.issue_id &&
-			!query.spend_on) {
+		if (!query.id && !query.issue_id && !query.spend_on) {
 			res.status("401").send({ message: "Not Authorized" });
 		}
-
-		console.log(query);
 
 		var options = {
 			protocol: "https",
@@ -154,9 +157,16 @@
 			}
 		};
 
-		var jsonUrl = url.format(options);
-		console.log(jsonUrl);
-		request(jsonUrl).pipe(res);
+		var jsonUrl = url.format(options)
+
+		var requestOptions = {
+			url: jsonUrl,
+			headers: {
+				'X-Redmine-API-Key': req.header("x-redmine-api-key")
+			}
+		}
+
+		request(requestOptions).pipe(res);
 
 	});
 
