@@ -33,7 +33,7 @@
       "severity": "warn"
     },
     "no-console": {
-      "severity": "warn"
+      "severity": "off"
     },
     "no-debugger": true,
     "no-duplicate-imports": true,

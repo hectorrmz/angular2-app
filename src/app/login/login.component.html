@@ -1,10 +1,10 @@
-<form class="form-signin">
+<form class="form-signin" #form="ngForm" (ngSubmit)="login(form, $event)" novalidate>
     <h3>Redmine Login</h3>
 
     <label>Email Address</label>
-    <input type="email" class="form-control" placeholder="Enter Email" required autofocus>
+    <input type="email" class="form-control" name="username" #username="ngModel" [(ngModel)]="user.username" placeholder="Enter Email" required>
     <label>Password</label>
-    <input type="password" class="form-control" placeholder="Password" required>
-
-    <button class="btn btn-md btn-primary btn-block" type="submit">Sign in</button>
+    <input type="password" class="form-control" name="password" #password="ngModel" [(ngModel)]="user.password"  placeholder="Password" required>
+    <p class="text-danger small text-center" *ngIf="error" >{{error}}</p>
+    <button [ladda]="loading" class="btn btn-md btn-primary btn-block" type="submit">Sign in</button>
 </form>
