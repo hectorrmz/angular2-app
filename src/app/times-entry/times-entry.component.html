@@ -1,4 +1,10 @@
 
 <times-project [projects]="projects" [issues]="issues" (change)="setIssue($event)"></times-project>
 
-<app-calendar [entries]="entries"  *ngIf="issueId"></app-calendar>
+<app-calendar [entries]="entries"  *ngIf="entries"></app-calendar>
+
+<div class="time-options">
+        <div class="time-option activity-{{activity.id}}" *ngFor="let activity of activities">
+            {{activity.name}}
+        </div>
+    </div>

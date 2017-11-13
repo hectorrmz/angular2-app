@@ -1,13 +1,13 @@
 export class Week {
 
-    weekDays: Array<Day> = [];
+    days: Array<Day> = [];
 
     constructor() {
 
         let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
         days.forEach((dayName: string, index: number) => {
-            this.weekDays.push({ name: dayName, day: index, times: { date: '', entries: [] } });
+            this.days.push({ name: dayName, day: index, times: { date: '', entries: [] } });
         });
     }
 }

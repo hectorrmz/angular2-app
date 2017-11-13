@@ -1,12 +1,12 @@
 <div class="calendar-view">
     <div class="time-calendar">
-        <div class="arrowed" (click)="currentView= currentView-1" [ngStyle]="{'visibility': currentView != 0 ? 'visible' : 'hidden'}"  >
+        <div class="arrowed" (click)="currentView= currentView-1" [ngStyle]="{'visibility': currentView != 0 ? 'visible' : 'hidden'}">
             <div class="arrow-1 left"></div>
         </div>
         <div class="calendar">
             <week-view [weeks]="weeks" [view]="currentView"></week-view>
         </div>
-        <div class="arrowed" (click)="currentView= currentView+1" [ngStyle]="{'visibility': currentView < weeks.length-1 ? 'visible' : 'hidden'}" >
+        <div class="arrowed" (click)="currentView= currentView+1" [ngStyle]="{'visibility': currentView < weeks.length-1 ? 'visible' : 'hidden'}">
             <div class="arrow-1 right"></div>
         </div>
     </div>

@@ -1,6 +1,9 @@
-import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ViewEncapsulation, OnChanges, Input } from '@angular/core';
+import * as moment from 'moment';
+
 import { CalendarHelper } from '../../../services/calendar-helper.service';
 import { Week, Day, Time } from '../../../models/Calendar';
+import { TimeEntry } from '../../../models/Redmine';
 
 @Component({
     selector: 'app-calendar',
@@ -8,17 +11,19 @@ import { Week, Day, Time } from '../../../models/Calendar';
     templateUrl: './calendar.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnChanges {
 
-    @Input() entries: Array<Time>;
+    @Input() entries: Array<TimeEntry>;
 
     weeks: Array<Week> = [];
-    onAddTime: Function;
+    times: Array<Time> = [];
+
     selected: Time;
 
     currentView: number;
 
     constructor(private calendarHelper: CalendarHelper) {
+
         this.setdaysRange();
         this.currentView = 0;
     }
@@ -39,7 +44,7 @@ export class CalendarComponent {
 
             let week = new Week();
 
-            week.weekDays.forEach((day: Day, index) => {
+            week.days.forEach((day: Day, index) => {
 
                 if ((index >= initialNumber || skip) && dayNumber <= end) {
                     day.date = dayNumber;
@@ -54,13 +59,33 @@ export class CalendarComponent {
         }
     }
 
+    createTimeEntries() {
+
+        this.entries.forEach((time: TimeEntry) => {
+
+            let date = moment(time.spent_on).date();
+
+            let entry: Time = {
+                title: time.comments,
+                duration: time.hours,
+                date: date,
+                activity: time.activity
+            };
+
+            this.times.push(entry);
+        });
+
+        this.setLoggedTimeEntries();
+
+    }
+
     setLoggedTimeEntries() {
 
         this.weeks.forEach((week: Week) => {
 
-            week.weekDays.forEach((day: Day) => {
+            week.days.forEach((day: Day) => {
 
-                day.times.entries = this.entries.filter((entry) =>
+                day.times.entries = this.times.filter((entry) =>
                     entry.date === day.date
                 );
 
@@ -77,5 +102,10 @@ export class CalendarComponent {
         }
 
         return total;
+    }
+
+    ngOnChanges(changes) {
+        console.log(changes);
+        this.createTimeEntries();
     }
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 
 import { TimesEntryComponent } from './times-entry.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
@@ -11,7 +12,8 @@ import { CalendarHelper } from '../services/calendar-helper.service';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        DragulaModule
     ],
     declarations: [
         TimesEntryComponent,

@@ -24,6 +24,14 @@ export class RedMineService {
 
     }
 
+    getActivities(): Observable<any> {
+
+        return this.http
+            .get('activities', this.options)
+            .map((response: Response) => response.json())
+            .catch((error: any) => Observable.throw(error.json()));
+    }
+
     getIssues(): Observable<any> {
 
         return this.http

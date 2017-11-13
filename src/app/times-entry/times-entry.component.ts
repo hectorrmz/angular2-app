@@ -5,7 +5,7 @@ import { RedMineService } from '../services/redmine.service';
 import { AuthHelper } from '../services/auth-helper.service';
 
 //models
-import { Project, Issue } from '../models/Redmine';
+import { Project, Issue, Activity } from '../models/Redmine';
 import { CalendarHelper } from '../services/calendar-helper.service';
 import { Time } from '../models/Calendar';
 
@@ -17,6 +17,7 @@ export class TimesEntryComponent {
 
     projects: Array<Project>;
     issues: Array<Issue>;
+    activities: Array<Activity>;
     entries: Array<Time>;
 
     issueId: number;
@@ -35,6 +36,8 @@ export class TimesEntryComponent {
             this.getIssues();
         }
 
+        this.getActivities();
+
     }
 
     getProjects() {
@@ -45,6 +48,11 @@ export class TimesEntryComponent {
     getIssues() {
         this.redmineService.getIssues().finally(() => console.log('Issues Called!'))
             .subscribe((response: any) => this.issues = response.issues);
+    }
+
+    getActivities(){
+        this.redmineService.getActivities().finally(() => console.log('Activities Called!'))
+        .subscribe((response: any) => this.activities = response.time_entry_activities);
     }
 
     getTimes(issueId: number) {
@@ -58,7 +66,7 @@ export class TimesEntryComponent {
 
         let dateRange = `><${currentYear}-${currentMont + 1}-01|${currentYear}-${currentMont + 1}-${lastDayInMonth}`;
 
-        this.redmineService.getTimeEntries(issueId, dateRange).finally(() => console.log('Issues Called!'))
+        this.redmineService.getTimeEntries(issueId, dateRange).finally(() => console.log('Times Called!'))
             .subscribe((response: any) => this.entries = response.time_entries);
     }
 

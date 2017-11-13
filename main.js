@@ -109,17 +109,11 @@
 	app.get("/activities", function (req, res) {
 
 		var url_parts = url.parse(req.url, true);
-		var query = url_parts.query;
 
-		if (!query.key) {
-			res.status("401").send({ message: "Not Authorized" });
-		}
-
-		var url = {
+		var options = {
 			protocol: "https",
 			host: "dev.unosquare.com",
-			pathname: "/redmine/enumerations/time_entry_activities.json",
-			query: { key: query.key }
+			pathname: "/redmine/enumerations/time_entry_activities.json"
 		};
 
 		var jsonUrl = url.format(options);

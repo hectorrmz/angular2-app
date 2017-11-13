@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 // App Modules
 import { SharedModule } from './shared/shared.module';
-import {TimesEntryModule} from './times-entry/times-entry.module';
+import { TimesEntryModule } from './times-entry/times-entry.module';
 
 // app Component
 import { AppComponent } from './app.component';
