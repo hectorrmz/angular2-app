@@ -14,10 +14,24 @@
                     </div>
                 </div>
                 <div class="day-footer" ng-if="day.date">
-                    <div class="add-btn">+</div>
+                    <div class="add-btn" (click)="modal.show()">
+                        <i class="fa fa-user"></i>
+                    </div>
                     <span>Total:</span>
                 </div>
             </ng-container>
         </div>
     </div>
 </ng-container>
+<app-modal #modal>
+    <div class="app-modal-header">
+        header
+    </div>
+    <div class="app-modal-body">
+        Whatever content you like, form fields, anything
+    </div>
+    <div class="app-modal-footer">
+        <button type="button" class="btn btn-default" (click)="modal.hide()">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+    </div>
+</app-modal>

@@ -5,6 +5,7 @@ import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { TimesEntryComponent } from './times-entry.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { WeekViewComponent } from './components/calendar/week-view/week-view.component';
+import { ModalComponent } from './components/modal/modal.component';
 import { ProjectComponent, FilterIssueByProject } from './components/project/project.component';
 
 //Services
@@ -20,9 +21,10 @@ import { CalendarHelper } from '../services/calendar-helper.service';
         CalendarComponent,
         WeekViewComponent,
         ProjectComponent,
+        ModalComponent,
         FilterIssueByProject
     ],
-    providers:[
+    providers: [
         CalendarHelper
     ]
 })
