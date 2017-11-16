@@ -31,7 +31,4 @@ export class WeekViewComponent {
     save(form: NgForm) {
         console.log(form.controls);
     }
-
-    sumTotal($event: Time[]) {
-    }
 }

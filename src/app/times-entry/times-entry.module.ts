@@ -6,6 +6,7 @@ import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { TimesEntryComponent } from './times-entry.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { WeekViewComponent } from './components/calendar/week-view/week-view.component';
+import { DayViewComponent } from './components/calendar/day-view/day-view.component';
 import { ModalComponent } from './components/calendar/modal-form/modal.component';
 import { ProjectComponent, FilterIssueByProject } from './components/project/project.component';
 
@@ -22,6 +23,7 @@ import { CalendarHelper } from '../services/calendar-helper.service';
         TimesEntryComponent,
         CalendarComponent,
         WeekViewComponent,
+        DayViewComponent,
         ProjectComponent,
         ModalComponent,
         FilterIssueByProject

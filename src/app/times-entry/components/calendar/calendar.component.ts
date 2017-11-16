@@ -49,7 +49,7 @@ export class CalendarComponent implements OnChanges {
 
                 if ((index >= initialNumber || skip) && dayNumber <= end) {
                     day.date = dayNumber;
-                    day.times.date =  moment(`${now.getMonth() + 1}-${dayNumber}-${now.getFullYear()}`).format('YYYY-MM-DD') ;
+                    day.times.date = moment(`${now.getMonth() + 1}-${dayNumber}-${now.getFullYear()}`).format('YYYY-MM-DD');
                     dayNumber++;
                 }
             });

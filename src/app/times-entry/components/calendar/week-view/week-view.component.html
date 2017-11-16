@@ -3,27 +3,8 @@
         <ng-container *ngFor="let day of week.days;">
             <div class="weekday" *ngIf="day.day!=0 && day.day!=6" [ngClass]="{'no-active': !day.date}">
                 <header>{{day.name}} {{day.date}}</header>
-                <ng-container *ngIf="day.date">
-                    <div class="day" [dragula]='"bag-one"' [dragulaModel]='day.times.entries'>
-                        <div *ngFor="let time of  day.times.entries" class="time activity-{{time.activity.id}}" [ngClass]="{'no-drag': !time.isNew, 'selected': time === selected}">
-                            <span>{{time.title}}</span>
-                            <div>
-                                <span class="hours">Hours:
-                                    <span class="hour-value">{{time.duration}}</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="day-footer" ng-if="day.date">
-                        <div class="add-btn" (click)="modal.show(day)">
-                            <i class="fa fa-plus"></i>
-                        </div>
-                        <span>Total:  </span>
-                    </div>
-                </ng-container>
+                <day-view [day]="day" [activities]="activities" *ngIf="day.date"></day-view>
             </div>
         </ng-container>
     </div>
 </ng-container>
-
-<app-modal #modal [activities]="activities" (timePushed)="sumTotal($event)" ></app-modal>

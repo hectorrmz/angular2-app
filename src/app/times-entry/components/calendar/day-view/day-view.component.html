@@ -1,0 +1,18 @@
+<div class="day" [dragula]='"bag-one"' [dragulaModel]='day.times.entries'>
+    <div *ngFor="let time of  day.times.entries" class="time activity-{{time.activity.id}}" [ngClass]="{'no-drag': !time.isNew, 'selected': time === selected}">
+        <span>{{time.title}}</span>
+        <div>
+            <span class="hours">Hours:
+                <span class="hour-value">{{time.duration}}</span>
+            </span>
+        </div>
+    </div>
+</div>
+<div class="day-footer" ng-if="day.date">
+    <div class="add-btn" (click)="modal.show(day)">
+        <i class="fa fa-plus"></i>
+    </div>
+    <span>Total: </span>
+</div>
+
+<app-modal #modal [activities]="activities" (timePushed)="sumTotal($event)"></app-modal>
