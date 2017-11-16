@@ -12,7 +12,16 @@ export class DayViewComponent {
     @Input() day: Day;
     @Input() activities: Array<Activity>;
 
-    sumTotal($event: Time[]) {
+    total: number = 0;
+
+    sumTotal() {
+        let hours = 0;
+
+        this.day.times.entries.forEach((time: Time) => {
+            hours = hours + time.duration;
+        });
+
+        this.total = hours;
     }
 
     transferDataSuccess($event, modal: any) {

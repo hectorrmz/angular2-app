@@ -13,7 +13,7 @@
     <div class="add-btn" (click)="modal.show(day)">
         <i class="fa fa-plus"></i>
     </div>
-    <span>Total: </span>
+    <span>Total: {{total}}</span>
 </div>
 
-<app-modal #modal [activities]="activities" (timePushed)="sumTotal($event)"></app-modal>
+<app-modal #modal [activities]="activities" (timePushed)="sumTotal()"></app-modal>
