@@ -1,5 +1,6 @@
-<div class="day" [dragula]='"bag-one"' [dragulaModel]='day.times.entries'>
-    <div *ngFor="let time of  day.times.entries" class="time activity-{{time.activity.id}}" [ngClass]="{'no-drag': !time.isNew, 'selected': time === selected}">
+<div class="day" dnd-droppable (onDropSuccess)="transferDataSuccess($event, modal)">
+    <div *ngFor="let time of  day.times.entries; let i=index" class="time activity-{{time.activity.id}}" dnd-draggable [dragEnabled]="false"
+        [dragData]="time" [ngClass]="{'no-drag': !time.isNew, 'selected': time === selected}">
         <span>{{time.title}}</span>
         <div>
             <span class="hours">Hours:

@@ -15,4 +15,10 @@ export class DayViewComponent {
     sumTotal($event: Time[]) {
     }
 
+    transferDataSuccess($event, modal: any) {
+        let time: Time = new Time();
+        time.activity = { ...$event.dragData.activity };
+        modal.show(this.day, time);
+    }
+
 }

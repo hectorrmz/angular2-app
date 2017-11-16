@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { DragulaModule } from 'ng2-dragula/ng2-dragula';
+import { DndModule } from 'ng2-dnd';
 
 import { TimesEntryComponent } from './times-entry.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
@@ -18,7 +18,7 @@ import { CalendarHelper } from '../services/calendar-helper.service';
     imports: [
         CommonModule,
         FormsModule,
-        DragulaModule
+        DndModule.forRoot()
     ],
     declarations: [
         TimesEntryComponent,

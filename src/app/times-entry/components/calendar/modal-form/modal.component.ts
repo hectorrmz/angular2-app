@@ -24,12 +24,16 @@ export class ModalComponent {
 
     timeDate: string;
 
-    show(day: Day): void {
+    show(day: Day, time?: Time): void {
 
         this.time = new Time();
         this.day = day;
         this.entries = day.times.entries;
         this.timeDate = moment(this.day.times.date).format('MMMM Do YYYY');
+
+        if (time) {
+            this.time.activity = time.activity;
+        }
 
         this.visible = true;
         this.visibleAnimate = true;
