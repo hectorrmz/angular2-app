@@ -1,0 +1,5 @@
+<div class="time-options" [dragula]='"bag-one"' [dragulaModel]='activities'>
+    <div class="time-option activity-{{time.activity.id}}" *ngFor="let time of times">
+        <span>{{time.activity.name}}</span>
+    </div>
+</div>

@@ -1,10 +1,6 @@
 <times-project [projects]="projects" [issues]="issues" (change)="setIssue($event)">
 </times-project>
 
-<app-calendar [entries]="entries" *ngIf="entries" [activities]="activities"></app-calendar>
+<app-options [activities]="activities"></app-options>
 
-<div class="time-options" [dragula]='"options"' [dragulaModel]='activities'>
-    <div class="time-option activity-{{activity.id}}" *ngFor="let activity of activities">
-        {{activity.name}}
-    </div>
-</div>
+<app-calendar [entries]="entries" *ngIf="entries" [activities]="activities"></app-calendar>

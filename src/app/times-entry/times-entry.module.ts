@@ -9,6 +9,7 @@ import { WeekViewComponent } from './components/calendar/week-view/week-view.com
 import { DayViewComponent } from './components/calendar/day-view/day-view.component';
 import { ModalComponent } from './components/calendar/modal-form/modal.component';
 import { ProjectComponent, FilterIssueByProject } from './components/project/project.component';
+import { OptionsComponent } from './components/options/options.component';
 
 //Services
 import { CalendarHelper } from '../services/calendar-helper.service';
@@ -26,6 +27,7 @@ import { CalendarHelper } from '../services/calendar-helper.service';
         DayViewComponent,
         ProjectComponent,
         ModalComponent,
+        OptionsComponent,
         FilterIssueByProject
     ],
     providers: [

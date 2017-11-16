@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { DragulaService } from 'ng2-dragula';
 import { Week, Time } from '../../../../models/Calendar';
 import { Activity } from '../../../../models/Redmine';
 
@@ -22,11 +21,7 @@ export class WeekViewComponent {
         title: ''
     };
 
-    constructor(private dragulaService: DragulaService) {
-        this.dragulaService.setOptions('bag-one', {
-            moves: (el, source, handle, sibling) => !el.classList.contains('no-drag')
-        });
-    }
+    constructor() { }
 
     save(form: NgForm) {
         console.log(form.controls);
