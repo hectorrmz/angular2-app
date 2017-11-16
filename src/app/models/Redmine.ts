@@ -3,7 +3,7 @@ export interface UserRM {
     created_on: string;
     firstname: string;
     id: number;
-    last_login_on: string,
+    last_login_on: string;
     lastname: string;
     login: string;
     mail: string;
@@ -14,7 +14,7 @@ export interface Issue {
     description: string;
     assigned_to: any;
     author: any;
-    project: Project
+    project: Project;
     status: any;
     subject: string;
     tracker: any;
@@ -44,7 +44,9 @@ export interface TimeEntry {
     user: any;
 }
 
-export interface Activity {
+export class Activity {
     id: number;
     name: string;
+
+    constructor() {}
 }

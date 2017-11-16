@@ -1,0 +1,35 @@
+<div (click)="onContainerClicked($event)" class="modal fade" tabindex="-1" [ngStyle]="{'display': visible ? 'block' : 'none', 'opacity': visibleAnimate ? 1 : 0}">
+    <div class="modal-dialog fade-scale" [ngClass]="{'in': visibleAnimate}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p>Add new Time Entry for {{timeDate}} </p>
+            </div>
+            <form #form="ngForm" (ngSubmit)="save(form)" novalidate>
+                <div class="modal-body">
+
+                    <div class="col-md-12">
+                        <label>Description</label>
+                        <input name="description" #description="ngModel" type="text" [(ngModel)]="time.title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <label>Hours</label>
+                            <input name="hour" #hour="ngModel" type="number" [(ngModel)]="time.duration" min="0" max="8" class="form-control" ng-model="$fc.time.hours"
+                                required>
+                        </div>
+                        <div class="col-md-8">
+                            <label>Activity</label>
+                            <select name="activity" #activity="ngModel" [(ngModel)]="time.activity.id" class="form-control" required>
+                                <option *ngFor="let activity of activities" [value]="activity.id">{{activity.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger pull-left" (click)="hide()">Close</button>
+                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -3,7 +3,7 @@ import * as moment from 'moment';
 
 import { CalendarHelper } from '../../../services/calendar-helper.service';
 import { Week, Day, Time } from '../../../models/Calendar';
-import { TimeEntry } from '../../../models/Redmine';
+import { TimeEntry, Activity } from '../../../models/Redmine';
 
 @Component({
     selector: 'app-calendar',
@@ -14,6 +14,7 @@ import { TimeEntry } from '../../../models/Redmine';
 export class CalendarComponent implements OnChanges {
 
     @Input() entries: Array<TimeEntry>;
+    @Input() activities: Array<Activity>;
 
     weeks: Array<Week> = [];
     times: Array<Time> = [];
@@ -48,7 +49,7 @@ export class CalendarComponent implements OnChanges {
 
                 if ((index >= initialNumber || skip) && dayNumber <= end) {
                     day.date = dayNumber;
-                    day.times.date = `${now.getFullYear()}-${now.getMonth() + 1}-${dayNumber}`;
+                    day.times.date =  moment(`${now.getMonth() + 1}-${dayNumber}-${now.getFullYear()}`).format('YYYY-MM-DD') ;
                     dayNumber++;
                 }
             });
@@ -107,5 +108,26 @@ export class CalendarComponent implements OnChanges {
     ngOnChanges(changes) {
         console.log(changes);
         this.createTimeEntries();
+    }
+
+    saveTimes() {
+
+        let newEntries: Time[] = [];
+
+        this.weeks.forEach((week: Week) => {
+
+            week.days.forEach((day: Day) => {
+
+                day.times.entries.forEach((time: Time) => {
+                    if (time.isNew) {
+                        newEntries.push(time);
+                    }
+                });
+
+            });
+
+        });
+
+        console.log(newEntries);
     }
 }

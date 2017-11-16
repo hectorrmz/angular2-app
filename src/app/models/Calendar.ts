@@ -1,3 +1,5 @@
+import { Activity } from './Redmine';
+
 export class Week {
 
     days: Array<Day> = [];
@@ -24,13 +26,19 @@ export interface TimesList {
     entries: Array<any>;
 }
 
-export interface Time{
+export class Time {
+
     title: string;
     duration: number;
-    date?: number;
-    activity: {
-        id: number,
-        name: string
-    };
+    date?: number | string;
+    activity: Activity;
     isNew?: boolean;
+
+    constructor() {
+        this.title = '';
+        this.duration = 0;
+        this.isNew = true;
+        this.date = 0;
+        this.activity = new Activity();
+    }
 }

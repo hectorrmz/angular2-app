@@ -1,0 +1,52 @@
+.modal {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.fade-scale {
+    animation: zoom-in .5s ease-in-out forwards;
+}
+
+.fade-scale.in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.modal-body {
+    padding: 5px;
+    form {
+        label {
+            margin: 0;
+            font-size: 12px;
+        }
+    }
+}
+
+@keyframes zoom-in {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes bounce-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translate3d(0, 0, 0);
+    }
+    50% {
+        opacity: 0.9;
+        transform: scale(1.1);
+    }
+    80% {
+        opacity: 1;
+        transform: scale(0.89);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translate3d(0, 0, 0);
+    }
+}

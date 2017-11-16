@@ -70,14 +70,14 @@
                         display: flex;
                         justify-content: space-between;
                         .add-btn {
-                            background: #7bcc4a;
+                            background: #4a78cc;
                             color: white;
-                            padding: 2px 7px;
-                            border-radius: 15px;
+                            padding: 1px 6px;
+                            border-radius: 7px;
                             font-size: 12px;
                             cursor: pointer;
                             &:hover {
-                                background: #99d277
+                                background: #6789c7;
                             }
                         }
                     }
