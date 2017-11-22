@@ -2,6 +2,8 @@ import { Component, ViewEncapsulation, OnChanges, Input } from '@angular/core';
 import * as moment from 'moment';
 
 import { CalendarHelper } from '../../../services/calendar-helper.service';
+import { RedMineService } from '../../../services/redmine.service';
+
 import { Week, Day, Time } from '../../../models/Calendar';
 import { TimeEntry, Activity } from '../../../models/Redmine';
 
@@ -23,7 +25,7 @@ export class CalendarComponent implements OnChanges {
 
     currentView: number;
 
-    constructor(private calendarHelper: CalendarHelper) {
+    constructor(private calendarHelper: CalendarHelper, private redMineService: RedMineService) {
 
         this.setdaysRange();
         this.currentView = 0;
@@ -129,5 +131,9 @@ export class CalendarComponent implements OnChanges {
         });
 
         console.log(newEntries);
+        this.redMineService.setTimeEntries(newEntries)
+            .subscribe((response: any) =>
+                console.log(response)
+            );
     }
 }

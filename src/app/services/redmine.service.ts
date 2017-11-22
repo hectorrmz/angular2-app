@@ -3,6 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import { AuthHelper } from './auth-helper.service';
+import { Time } from '../models/Calendar';
 
 @Injectable()
 export class RedMineService {
@@ -50,6 +51,12 @@ export class RedMineService {
 
     getTimeEntries(issueId: number, date: string) {
         return this.http.get(`times?id=${this.userId}&issue_id=${issueId}&spend_on=${date}`, this.options)
+            .map((response: Response) => response.json())
+            .catch((error: any) => Observable.throw(error.json()));
+    }
+
+    setTimeEntries(times: Array<Time>) {
+        return this.http.post('times', times, this.options)
             .map((response: Response) => response.json())
             .catch((error: any) => Observable.throw(error.json()));
     }

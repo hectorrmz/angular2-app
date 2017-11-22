@@ -165,6 +165,28 @@
 
 	});
 
+	app.post("/times", function (req, res) {
+
+		var times = req.body;
+		var entries = [];
+
+		for (var i = 0; i < times.length; i++) {
+
+			var entry = {
+				comments: times[i].title,
+				hours: times[i].duration,
+				spend_on: times[i].date,
+				activity_id: times[i].activity.id,
+				issue_id: times[i].issueId
+			}
+
+			entries.push(entry);
+		}
+
+		res.send(entries);
+
+	});
+
 	process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 
 	app.use(express.static(__dirname + "/wwwroot/"));

@@ -1,6 +1,7 @@
 <times-project [projects]="projects" [issues]="issues" (change)="setIssue($event)">
 </times-project>
 
-<app-options [activities]="activities"></app-options>
-
-<app-calendar [entries]="entries" *ngIf="entries" [activities]="activities"></app-calendar>
+<ng-container *ngIf="entries">
+    <app-options [activities]="activities"></app-options>
+    <app-calendar [entries]="entries" [activities]="activities"></app-calendar>
+</ng-container>

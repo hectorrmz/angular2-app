@@ -33,6 +33,7 @@ export class Time {
     date?: number | string;
     activity: Activity;
     isNew?: boolean;
+    issueId?: string | number;
 
     constructor() {
         this.title = '';
@@ -40,5 +41,6 @@ export class Time {
         this.isNew = true;
         this.date = 0;
         this.activity = new Activity();
+        this.issueId = window.sessionStorage.getItem('issue_id');
     }
 }
