@@ -183,6 +183,11 @@
 			entries.push(entry);
 		}
 
+		entries.forEach(entry=>{
+			console.log(entry);
+			
+		});
+
 		res.send(entries);
 
 	});

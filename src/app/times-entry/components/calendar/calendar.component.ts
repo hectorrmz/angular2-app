@@ -131,9 +131,11 @@ export class CalendarComponent implements OnChanges {
         });
 
         console.log(newEntries);
-        this.redMineService.setTimeEntries(newEntries)
-            .subscribe((response: any) =>
-                console.log(response)
-            );
+        if (confirm('Are you sure you want to submit this times entries?')) {
+            this.redMineService.setTimeEntries(newEntries)
+                .subscribe((response: any) =>
+                    console.log(response)
+                );
+        }
     }
 }
