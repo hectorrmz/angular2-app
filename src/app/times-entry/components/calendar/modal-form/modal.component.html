@@ -9,24 +9,24 @@
 
                     <div class="col-md-12">
                         <label>Description</label>
-                        <input name="description" #description="ngModel" type="text" [(ngModel)]="time.title" class="form-control" required autofocus>
+                        <input name="description" #description="ngModel" type="text" [ngModel]="time.title" class="form-control" required autofocus>
                     </div>
                     <div class="form-group">
                         <div class="col-md-3">
                             <label>Hours</label>
-                            <input name="hour" #hour="ngModel" type="number" [(ngModel)]="time.duration" min="0" max="8" class="form-control" ng-model="$fc.time.hours"
+                            <input name="hour" #hour="ngModel" type="number" [ngModel]="time.duration" min="0" max="8" class="form-control" ng-model="$fc.time.hours"
                                 required>
                         </div>
                         <div class="col-md-8">
                             <label>Activity</label>
-                            <select name="activity" #activity="ngModel" [(ngModel)]="time.activity.id" class="form-control" required>
+                            <select name="activity" #activity="ngModel" [ngModel]="time.activity.id" class="form-control" required>
                                 <option *ngFor="let activity of activities" [value]="activity.id">{{activity.name}}</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger pull-left" (click)="hide()">Close</button>
+                    <button type="button" class="btn btn-danger pull-left" (click)="hide()">Cancel</button>
                     <button type="submit" class="btn btn-primary pull-right">Save</button>
                 </div>
             </form>

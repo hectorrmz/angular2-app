@@ -1,6 +1,6 @@
 <div class="day" dnd-droppable (onDropSuccess)="transferDataSuccess($event, modal)">
     <div *ngFor="let time of  day.times.entries; let i=index" class="time activity-{{time.activity.id}}" dnd-draggable [dragEnabled]="false"
-        [dragData]="time" [ngClass]="{'no-drag': !time.isNew, 'selected': time === selected}">
+        [dragData]="time" [ngClass]="{'no-drag': !time.isNew, 'selected': time === selected}" (dblclick)="editTime(modal, time)" >
         <span>{{time.title}}</span>
         <div>
             <span class="hours">Hours:

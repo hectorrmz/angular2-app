@@ -1,5 +1,7 @@
 <div class="time-options">
-    <div class="time-option activity-{{time.activity.id}}" *ngFor="let time of times" dnd-draggable [dragEnabled]="true" [dragData]="time">
+    <div class="time-option-button activity-{{time.activity.id}}" *ngFor="let time of times" dnd-draggable [dragEnabled]="true"
+        [dragData]="time">
+        <div class='icon'></div>
         <span>{{time.activity.name}}</span>
     </div>
 </div>

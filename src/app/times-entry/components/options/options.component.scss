@@ -1,82 +1,160 @@
+@mixin transition($in) {
+	transition:$in;
+	-webkit-transition:$in;
+	-moz-transition:$in;
+	-o-transition:$in;
+	-ms-transition:$in;
+}
+
 .time-options{
     width:100%;
-.time-option {
-    position: relative;
-    border: 1px solid #bbbbbb;
-    margin: 2px;
-    padding: 5px 15px;
-    font-size: 12px;
-    line-height: 1.2;
-    min-height: 30px;
-    border-radius: 5px; //Development
-    user-select: none;
-    cursor: pointer;
-    display: inline-block;
-    min-width: 130px;
-    &:hover {
-        opacity: .8;
-    }
-    &.selected {
-        .remove {
-            display: block;
+    text-align: center;
+
+
+.time-option-button {
+	outline:none;
+	border:none;
+	padding:5px 15px;
+	display:inline-block;
+	cursor:pointer;
+	font-size:12px;
+	background-color:transparent;
+	position:relative;
+    border:0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin:2px;
+
+    @include transition(all 0.5s ease);
+    
+    .icon {
+		color:#000;
+        display:inline-block;
+        
+        &:before{
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: inherit;
         }
+		
+		@include transition(all 0.3s ease);
+
+	}
+
+	span {
+		position:absolute;
+		right:-150px;
+		top:0px;
+		color:#000;
+		padding:5px;
+		@include transition(all 0.3s ease);
+	}
+
+	&:hover {
+		span {
+			left:-130px;
+		}
+		.icon {
+			margin-right:150px;
+		}
     }
-    &:active {
-        opacity: .9;
-    }
+    
     &.activity-9 {
-        background: #7bcc4a;
+        background: #60a917;
         color: #1e5a2c;
-    } //Meeting
+        .icon::before{
+            content: "\f109";
+        }
+    } 
+    //Meeting
     &.activity-10 {
-        background: #4b9ccc;
+        background: #054eee;
         color: #225979;
-    } //Infrastructute
-    &.activity-73 {
+        .icon::before{
+            content: "\f073";
+        }
+    } 
+    //Infrastructute
+    &.activity-59 {
         background: #e65757;
         color: #752727;
-    } //Holiday
-    &.activity-72 {
-        height: 365px;
-        background: #ececec;
-    } //Research
+        .icon::before{
+            content: "\f071";
+        }
+    } 
+    //Holiday
+    &.activity-48 {
+        background: #81592b;
+        .icon::before{
+            content: "\f0f2";
+        }
+    } 
+    //Research
     &.activity-14 {
         background: #ad5bf7;
         color: #49286b;
-    } //Testing
+        .icon::before{
+            content: "\f002";
+        }
+    } 
+    //Testing
     &.activity-12 {
-        background: #8df9d1;
+        background: #765f8a;
         color: #31735b;
+        .icon::before{
+            content: "\f188";
+        }
     }
-    //Infrastructure shutdown
-    &.activity-147 {
-        background: #f96666;
+    //Design
+    &.activity-8 {
+        background: #d8c000;
+        .icon::before{
+            content: "\f040";
+        }
     }
-    .hours {
-        background: black;
-        color: white;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        padding: 2px 7px;
-        border-radius: 5px;
+    //Test cases design
+    &.activity-11 {
+        background: #01aba9;
+        .icon::before{
+            content: "\f044";
+        }
     }
-    .remove {
-        background: black;
-        position: absolute;
-        top: -3px;
-        left: -3px;
-        padding: 4px 5px;
-        border-radius: 10px;
-        color: white;
-        font-size: 9px;
-        display: none;
+     //Reporting
+     &.activity-13 {
+        background: #d80273;
+        .icon::before{
+            content: "\f0ca";
+        }
     }
-    &.no-drag {
-        cursor: not-allowed;
-        &:hover {
-            opacity: 1;
+    //IT Support
+    &.activity-50 {
+        background: #fa6800;
+        .icon::before{
+            content: "\f059";
+        }
+    }
+    //Wait time
+    &.activity-62 {
+        background: #1ba1e2;
+        .icon::before{
+            content: "\f017";
+        }
+    }
+    //Training
+    &.activity-137 {
+        background: #a20125;
+        .icon::before{
+            content: "\f0c0";
+        }
+    }
+    //Comp Time
+    &.activity-142   {
+        background: #a4c400;
+        .icon::before{
+            content: "\f1da";
         }
     }
 }
+
 }

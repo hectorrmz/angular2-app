@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Day, Time } from '../../../../models/Calendar';
 import { Activity } from '../../../../models/Redmine';
+import { ModalComponent } from '../modal-form/modal.component';
 
 @Component({
     selector: 'day-view',
@@ -27,6 +28,10 @@ export class DayViewComponent {
     transferDataSuccess($event, modal: any) {
         let time: Time = new Time();
         time.activity = { ...$event.dragData.activity };
+        modal.show(this.day, time, true);
+    }
+
+    editTime(modal: ModalComponent, time: Time){
         modal.show(this.day, time);
     }
 

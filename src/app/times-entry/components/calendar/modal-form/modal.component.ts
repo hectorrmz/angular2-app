@@ -18,21 +18,26 @@ export class ModalComponent {
 
     visible = false;
     visibleAnimate = false;
+    isNew = false;
     time: Time = new Time();
+    editableTime: Time;
     day: Day;
     entries: Time[];
 
     timeDate: string;
 
-    show(day: Day, time?: Time): void {
-
+    show(day: Day, time?: Time, isNew?: boolean): void {
+        this.isNew = isNew;
         this.time = new Time();
         this.day = day;
         this.entries = day.times.entries;
         this.timeDate = moment(this.day.times.date).format('MMMM Do YYYY');
 
-        if (time) {
+        if (time && isNew) {
             this.time.activity = time.activity;
+        } else if (time) {
+            this.editableTime = time;
+            this.time = time;
         }
 
         this.visible = true;
@@ -51,10 +56,23 @@ export class ModalComponent {
     }
 
     save(form: NgForm) {
-        this.time.isNew = true;
-        this.time.date = this.day.times.date;
-        this.entries.push(this.time);
-        this.timePushed.emit(this.entries);
-        this.hide();
+
+        if (form.valid) {
+            this.time.isNew = true;
+            this.time.date = this.day.times.date;
+
+            this.time.title = form.controls['description'].value;
+            this.time.duration = form.controls['hour'].value;
+            this.time.activity.id = form.controls['activity'].value;
+
+            if (this.isNew) {
+                this.entries.push(this.time);
+                this.timePushed.emit(this.entries);
+            } else {
+                this.editableTime = this.time;
+            }
+
+            this.hide();
+        }
     }
 }
