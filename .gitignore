@@ -3,3 +3,5 @@ node_modules
 package-lock.json
 
 wwwroot/js
+wwwroot/app.**.css
+wwwroot/index.html
