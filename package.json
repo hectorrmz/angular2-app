@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server --config ./config/webpack.local.js --port 5000",
+    "start": "webpack-dev-server --config ./config/webpack.local.js --port 4000",
     "test": "karma start",
     "build": "webpack --config ./config/webpack.dev.js",
     "build:prod": "webpack --config ./config/webpack.prod.js",
