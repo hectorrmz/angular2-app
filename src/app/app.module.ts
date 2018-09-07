@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 
 // App Modules
@@ -16,21 +16,15 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { RedMineService } from './services/redmine.service';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    SharedModule,
-    TimesEntryModule
-  ],
-  declarations: [
-    AppComponent
-  ],
+  imports: [BrowserModule, SharedModule, TimesEntryModule],
+  declarations: [AppComponent],
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
     AuthService,
     AuthHelper,
     AuthGuardService,
-    RedMineService
+    RedMineService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

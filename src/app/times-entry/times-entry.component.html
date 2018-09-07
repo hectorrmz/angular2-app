@@ -1,7 +1,11 @@
-<times-project [projects]="projects" [issues]="issues" (change)="setIssue($event)">
+<times-project [projects]="projects"
+    [issues]="issues"
+    (change)="setIssue($event)">
 </times-project>
 
 <ng-container *ngIf="entries">
-    <app-options [activities]="activities"></app-options>
-    <app-calendar [entries]="entries" [activities]="activities"></app-calendar>
+
+    <app-calendar [entries]="entries"
+        [activities]="activities"></app-calendar>
+    <outlook></outlook>
 </ng-container>

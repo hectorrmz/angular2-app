@@ -1,205 +1,220 @@
-(function () {
-	var express = require("express");
-	var url = require("url");
-	var bodyParser = require('body-parser')
-	var request = require("request");
+(function() {
+  var express = require('express');
+  var url = require('url');
+  var bodyParser = require('body-parser');
+  var request = require('request');
 
-	var app = express();
+  var app = express();
 
-	app.get("/", function (req, res) {
-		res.sendFile(__dirname + "/wwwroot/index.html");
-	});
+  app.get('/', function(req, res) {
+    res.sendFile(__dirname + '/wwwroot/index.html');
+  });
 
-	// parse application/x-www-form-urlencoded
-	app.use(bodyParser.urlencoded({ extended: false }))
-	// parse application/json
-	app.use(bodyParser.json());
+  // parse application/x-www-form-urlencoded
+  app.use(bodyParser.urlencoded({ extended: false }));
+  // parse application/json
+  app.use(bodyParser.json());
 
+  app.post('/user', function(req, res) {
+    var username = req.body.username;
+    var password = req.body.password;
 
-	app.post("/user", function (req, res) {
+    if (!username || !password) {
+      res.status('400').send({ message: 'Could not find username or password' });
+    }
 
-		var username = req.body.username;
-		var password = req.body.password;
+    var encode = Buffer.from(username + ':' + password).toString('base64');
 
-		if (!username || !password) {
-			res.status("400").send({ message: "Could not find username or password" });
-		}
+    var options = {
+      protocol: 'https',
+      host: `${username}:${password}@dev.unosquare.com`,
+      pathname: '/redmine/users/current.json',
+    };
 
-		var encode = Buffer.from(username + ":" + password).toString("base64");
+    var jsonUrl = url.format(options);
 
-		var options = {
-			protocol: "https",
-			host: `${username}:${password}@dev.unosquare.com`,
-			pathname: "/redmine/users/current.json"
-		};
+    request(jsonUrl)
+      .on('response', function(response) {
+        if (response.statusCode === 401) {
+          res.status('400').send({ message: 'Invalid username or password' });
+        }
+      })
+      .pipe(res);
+  });
 
-		var jsonUrl = url.format(options);
+  authorizeService = function(req, res, next) {
+    next();
+  };
 
-		request(jsonUrl).on('response', function (response) {
-			if (response.statusCode === 401) {
-				res.status("400").send({ message: "Invalid username or password" });
-			}
-		}).pipe(res);
+  app.get('/projects', function(req, res) {
+    var url_parts = url.parse(req.url, true);
+    var query = url_parts.query;
 
+    if (!req.header('x-redmine-api-key')) {
+      res.status('401').send({ message: 'Not Authorized' });
+    }
 
-	});
+    var options = {
+      protocol: 'https',
+      host: 'dev.unosquare.com',
+      pathname: '/redmine/projects.json',
+    };
 
-	authorizeService = function (req, res, next) {
-		next();
-	}
+    var jsonUrl = url.format(options);
 
-	app.get("/projects", function (req, res) {
+    var options = {
+      url: jsonUrl,
+      headers: {
+        'X-Redmine-API-Key': req.header('x-redmine-api-key'),
+      },
+    };
 
-		var url_parts = url.parse(req.url, true);
-		var query = url_parts.query;
+    request(options).pipe(res);
+  });
 
-		if (!req.header("x-redmine-api-key")) {
-			res.status("401").send({ message: "Not Authorized" });
-		}
+  app.get('/issues', function(req, res) {
+    var url_parts = url.parse(req.url, true);
+    var query = url_parts.query;
 
-		var options = {
-			protocol: "https",
-			host: "dev.unosquare.com",
-			pathname: "/redmine/projects.json"
-		};
+    if (!query.id) {
+      res.status('401').send({ message: 'Not Authorized' });
+    }
 
-		var jsonUrl = url.format(options);
+    var options = {
+      protocol: 'https',
+      host: 'dev.unosquare.com',
+      pathname: '/redmine/issues.json',
+      query: { assigned_to_id: query.id },
+    };
 
-		var options = {
-			url: jsonUrl,
-			headers: {
-				'X-Redmine-API-Key': req.header("x-redmine-api-key")
-			}
-		}
+    var jsonUrl = url.format(options);
 
-		request(options).pipe(res);
+    var requestOptions = {
+      url: jsonUrl,
+      headers: {
+        'X-Redmine-API-Key': req.header('x-redmine-api-key'),
+      },
+    };
 
-	});
+    request(requestOptions).pipe(res);
+  });
 
+  app.get('/activities', function(req, res) {
+    var url_parts = url.parse(req.url, true);
 
-	app.get("/issues", function (req, res) {
+    var options = {
+      protocol: 'https',
+      host: 'dev.unosquare.com',
+      pathname: '/redmine/enumerations/time_entry_activities.json',
+    };
 
-		var url_parts = url.parse(req.url, true);
-		var query = url_parts.query;
+    var jsonUrl = url.format(options);
 
-		if (!query.id) {
-			res.status("401").send({ message: "Not Authorized" });
-		}
+    var requestOptions = {
+      url: jsonUrl,
+      headers: {
+        'X-Redmine-API-Key': req.header('x-redmine-api-key'),
+      },
+    };
 
-		var options = {
-			protocol: "https",
-			host: "dev.unosquare.com",
-			pathname: "/redmine/issues.json",
-			query: { assigned_to_id: query.id }
-		};
+    request(requestOptions).pipe(res);
+  });
 
-		var jsonUrl = url.format(options);
+  app.get('/times', function(req, res) {
+    var url_parts = url.parse(req.url, true);
+    var query = url_parts.query;
 
-		var requestOptions = {
-			url: jsonUrl,
-			headers: {
-				'X-Redmine-API-Key': req.header("x-redmine-api-key")
-			}
-		}
+    if (!query.id && !query.issue_id && !query.spend_on) {
+      res.status('401').send({ message: 'Not Authorized' });
+    }
 
-		request(requestOptions).pipe(res);
+    var options = {
+      protocol: 'https',
+      host: 'dev.unosquare.com',
+      pathname: '/redmine/time_entries.json',
+      query: {
+        issue_id: query.issue_id,
+        user_id: query.id,
+        spent_on: query.spend_on,
+        limit: 99,
+      },
+    };
 
-	});
+    var jsonUrl = url.format(options);
 
-	app.get("/activities", function (req, res) {
+    console.log(jsonUrl);
 
-		var url_parts = url.parse(req.url, true);
+    var requestOptions = {
+      url: jsonUrl,
+      headers: {
+        'X-Redmine-API-Key': req.header('x-redmine-api-key'),
+      },
+    };
 
-		var options = {
-			protocol: "https",
-			host: "dev.unosquare.com",
-			pathname: "/redmine/enumerations/time_entry_activities.json"
-		};
+    request(requestOptions).pipe(res);
+  });
 
-		var jsonUrl = url.format(options);
+  app.post('/times', function(req, res) {
+    var times = req.body;
+    var entries = [];
 
-		var requestOptions = {
-			url: jsonUrl,
-			headers: {
-				'X-Redmine-API-Key': req.header("x-redmine-api-key")
-			}
-		}
+    for (var i = 0; i < times.length; i++) {
+      var entry = {
+        comments: times[i].title,
+        hours: times[i].duration,
+        spend_on: times[i].date,
+        activity_id: times[i].activity.id,
+        issue_id: times[i].issueId,
+      };
 
-		request(requestOptions).pipe(res);
+      entries.push(entry);
+    }
 
-	});
+    entries.forEach(entry => {
+      console.log(entry);
+    });
 
-	app.get("/times", function (req, res) {
+    res.send(entries);
+  });
 
-		var url_parts = url.parse(req.url, true);
-		var query = url_parts.query;
+  app.post('/token', function(req, res) {
+    var code = req.body.code;
 
-		if (!query.id && !query.issue_id && !query.spend_on) {
-			res.status("401").send({ message: "Not Authorized" });
-		}
+    if (!code) {
+      res.status('400').send({ message: 'Could not find ourlook code' });
+    }
 
-		var options = {
-			protocol: "https",
-			host: "dev.unosquare.com",
-			pathname: "/redmine/time_entries.json",
-			query: {
-				issue_id: query.issue_id,
-				user_id: query.id,
-				spent_on: query.spend_on,
-				limit: 99
-			}
-		};
+    var options = {
+      protocol: 'https',
+      host: `login.microsoftonline.com`,
+      pathname: '/common/oauth2/v2.0/token',
+    };
 
-		var jsonUrl = url.format(options);
+    var jsonUrl = url.format(options);
 
-		console.log(jsonUrl);
+    request({
+      url: jsonUrl,
+      method: 'POST',
+      form: {
+        client_id: 'f4fc957d-8eaf-4147-83c9-82360e2ee051',
+        scope: 'calendars.read',
+        code: code,
+        grant_type: 'authorization_code',
+        redirect_uri: 'http://localhost:5000/',
+        client_Secret: 'gmnRMU6854%rrjxEEAN4@[^',
+      },
+    })
+      .on('response', function(response) {})
+      .pipe(res);
+  });
 
-		var requestOptions = {
-			url: jsonUrl,
-			headers: {
-				'X-Redmine-API-Key': req.header("x-redmine-api-key")
-			}
-		}
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-		request(requestOptions).pipe(res);
+  app.use(express.static(__dirname + '/wwwroot/'));
 
-	});
+  var port = Number(process.env.PORT || 5000);
 
-	app.post("/times", function (req, res) {
-
-		var times = req.body;
-		var entries = [];
-
-		for (var i = 0; i < times.length; i++) {
-
-			var entry = {
-				comments: times[i].title,
-				hours: times[i].duration,
-				spend_on: times[i].date,
-				activity_id: times[i].activity.id,
-				issue_id: times[i].issueId
-			}
-
-			entries.push(entry);
-		}
-
-		entries.forEach(entry=>{
-			console.log(entry);
-			
-		});
-
-		res.send(entries);
-
-	});
-
-	process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
-
-	app.use(express.static(__dirname + "/wwwroot/"));
-
-	var port = Number(process.env.PORT || 5000);
-
-	app.listen(port, function () {
-		console.log("Listening on " + port);
-
-	});
-}());
+  app.listen(port, function() {
+    console.log('Listening on ' + port);
+  });
+})();
