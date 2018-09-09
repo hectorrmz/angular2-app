@@ -5,7 +5,7 @@ import { RedMineService } from '../services/redmine.service';
 import { AuthHelper } from '../services/auth-helper.service';
 
 //models
-import { Project, Issue, Activity } from '../models/Redmine';
+import { Project, Issue, Activity, TimeEntry } from '../models/Redmine';
 import { CalendarHelper } from '../services/calendar-helper.service';
 import { Time } from '../models/Calendar';
 
@@ -17,7 +17,8 @@ export class TimesEntryComponent {
   projects: Array<Project>;
   issues: Array<Issue>;
   activities: Array<Activity>;
-  entries: Array<Time>;
+  entries: Array<TimeEntry>;
+  outlookData: Time[] = [];
 
   issueId: number;
 
@@ -76,7 +77,10 @@ export class TimesEntryComponent {
     this.redmineService
       .getTimeEntries(issueId, dateRange)
       .finally(() => console.log('Times Called!'))
-      .subscribe((response: any) => (this.entries = response.time_entries));
+      .subscribe((response: any) => {
+        this.entries = response.time_entries;
+      }
+      );
   }
 
   setIssue(issue: Issue) {
@@ -84,5 +88,9 @@ export class TimesEntryComponent {
 
     this.authHelper.setIssueId(this.issueId);
     this.getTimes(this.issueId);
+  }
+
+  importOutlookEvents(events: Time[]){
+    this.outlookData = events;
   }
 }

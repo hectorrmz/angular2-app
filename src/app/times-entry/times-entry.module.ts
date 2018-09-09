@@ -16,8 +16,7 @@ import { OptionsComponent } from './components/options/options.component';
 import { OutlookComponent } from './components/outlook/outlook.component';
 
 //Services
-import { CalendarHelper } from '../services/calendar-helper.service';
-import { OutlookService } from './components/outlook/outlook.service';
+import { CalendarHelper, OutlookService } from '../services';
 
 @NgModule({
   imports: [CommonModule, FormsModule, DndModule.forRoot()],

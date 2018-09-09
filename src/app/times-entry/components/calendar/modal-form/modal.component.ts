@@ -67,11 +67,10 @@ export class ModalComponent {
 
             if (this.isNew) {
                 this.entries.push(this.time);
-                this.timePushed.emit(this.entries);
             } else {
                 this.editableTime = this.time;
             }
-
+            this.timePushed.emit(this.entries);
             this.hide();
         }
     }

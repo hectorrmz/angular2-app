@@ -18,6 +18,7 @@ export class CalendarComponent implements OnChanges {
   entries: Array<TimeEntry>;
   @Input()
   activities: Array<Activity>;
+  @Input() outlookEvents: Time[];
 
   weeks: Array<Week> = [];
   times: Array<Time> = [];
@@ -32,6 +33,13 @@ export class CalendarComponent implements OnChanges {
   ) {
     this.setdaysRange();
     this.currentView = 0;
+  }
+
+  ngOnChanges(changes) {
+    this.createTimeEntries();
+    if(changes['outlookEvents'] && this.outlookEvents.length){
+      this.importOutlookEvents();
+    }
   }
 
   setdaysRange() {
@@ -95,6 +103,18 @@ export class CalendarComponent implements OnChanges {
     this.setLoggedTimeEntries();
   }
 
+  importOutlookEvents(){
+    this.times = this.times.concat(this.outlookEvents);
+
+    this.times = this.times.filter((time, index, self) =>
+      index === self.findIndex((t) => (
+        t.title === time.title && t.date === time.date
+      ))
+    );
+
+    this.setLoggedTimeEntries();
+  }
+
   setLoggedTimeEntries() {
     this.weeks.forEach((week: Week) => {
       week.days.forEach((day: Day) => {
@@ -111,11 +131,6 @@ export class CalendarComponent implements OnChanges {
     }
 
     return total;
-  }
-
-  ngOnChanges(changes) {
-    console.log(changes);
-    this.createTimeEntries();
   }
 
   saveTimes() {

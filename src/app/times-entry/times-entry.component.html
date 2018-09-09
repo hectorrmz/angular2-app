@@ -4,8 +4,8 @@
 </times-project>
 
 <ng-container *ngIf="entries">
-
+    <app-options [activities]="activities"></app-options>
     <app-calendar [entries]="entries"
-        [activities]="activities"></app-calendar>
-    <outlook></outlook>
+        [activities]="activities" [outlookEvents]="outlookData" ></app-calendar>
+    <outlook (outlookEventsImported)="importOutlookEvents($event)"></outlook>
 </ng-container>

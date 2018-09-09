@@ -208,6 +208,33 @@
       .pipe(res);
   });
 
+  app.get('/events', function(req, res){
+    var url_parts = url.parse(req.url, true);
+    var query = url_parts.query;
+
+        var options = {
+          protocol: 'https',
+          host: 'outlook.office365.com/',
+          pathname: 'api/v1.0/me/calendarview',
+          query: {
+            startDateTime: query.startDateTime,
+            endDateTime: query.endDateTime,
+            top: 99
+          }
+        };
+
+        var jsonUrl = url.format(options);
+
+        var requestOptions = {
+          url: jsonUrl,
+          headers: {
+            'Authorization': req.header('authorization'),
+          },
+        };
+
+        request(requestOptions).pipe(res);
+  });
+
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
   app.use(express.static(__dirname + '/wwwroot/'));

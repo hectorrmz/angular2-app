@@ -11,7 +11,7 @@
     user-select: none;
     cursor: pointer;
     &:hover {
-        opacity: .8;
+        opacity: .95;
     }
     &.selected {
         .remove {
@@ -73,6 +73,24 @@
         cursor: not-allowed;
         &:hover {
             opacity: 1;
+        }
+    }
+
+    &.exist{
+        opacity: .7;
+    }
+
+    .remove-time{
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        background: black;
+        padding: 3px;
+        border-radius: 5px;
+        color: white;
+
+        &:hover{
+            opacity: .8;
         }
     }
 }
